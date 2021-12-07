@@ -11,6 +11,7 @@ const apollo_server_express_1 = require("apollo-server-express");
 const type_graphql_1 = require("type-graphql");
 const helloResolver_1 = __importDefault(require("./resolvers/helloResolver"));
 const post_1 = __importDefault(require("./resolvers/post"));
+const UserResolver_1 = __importDefault(require("./resolvers/UserResolver"));
 dotenv_1.default.config();
 const main = async () => {
     const orm = await core_1.MikroORM.init(mikro_orm_config_1.default);
@@ -18,7 +19,7 @@ const main = async () => {
     const app = (0, express_1.default)();
     const apollo = new apollo_server_express_1.ApolloServer({
         schema: await (0, type_graphql_1.buildSchema)({
-            resolvers: [helloResolver_1.default, post_1.default],
+            resolvers: [helloResolver_1.default, post_1.default, UserResolver_1.default],
             validate: false
         }),
         context: () => ({

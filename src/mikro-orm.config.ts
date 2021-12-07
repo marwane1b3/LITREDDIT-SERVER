@@ -9,7 +9,6 @@ dotenv.config();
 
 const password = process.env.DB_PASSWORD || '';
 const user = process.env.DB_USER || '';
-console.log(password);
 export default {
     debug: !__PROD__,
     migrations: {

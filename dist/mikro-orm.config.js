@@ -11,7 +11,6 @@ const user_1 = require("./entities/user");
 dotenv_1.default.config();
 const password = process.env.DB_PASSWORD || '';
 const user = process.env.DB_USER || '';
-console.log(password);
 exports.default = {
     debug: !constants_1.__PROD__,
     migrations: {

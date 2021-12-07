@@ -6,28 +6,29 @@ import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import HelloResolver from './resolvers/helloResolver';
 import PostResolver from './resolvers/post';
+import UserResolver from './resolvers/UserResolver';
 dotenv.config();
 
 const main = async () => {
-  const orm = await MikroORM.init(config);
-  await orm.getMigrator().up();
+    const orm = await MikroORM.init(config);
+    await orm.getMigrator().up();
 
-  const app = express();
+    const app = express();
 
-  const apollo = new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [HelloResolver, PostResolver],
-      validate: false
-    }),
-    context: () => ({
-      em: orm.em
-    })
-  });
-  await apollo.start();
-  apollo.applyMiddleware({ app });
-  app.listen(process.env.PORT, () => {
-    console.log(`server running on portt : ${process.env.PORT}`);
-  });
+    const apollo = new ApolloServer({
+        schema: await buildSchema({
+            resolvers: [HelloResolver, PostResolver, UserResolver],
+            validate: false
+        }),
+        context: () => ({
+            em: orm.em
+        })
+    });
+    await apollo.start();
+    apollo.applyMiddleware({ app });
+    app.listen(process.env.PORT, () => {
+        console.log(`server running on portt : ${process.env.PORT}`);
+    });
 };
 
 main().catch(err => console.error(err));
